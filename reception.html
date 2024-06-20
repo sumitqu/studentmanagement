@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reception Panel</title>
+    
+    <link href="css/particles.css" rel="stylesheet"/>
+    <link href="css/auth.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="tsparticles"></div>
+    <main class="box">
+    <div id ="findDetails">
+        <h2>Find by Id</h2>
+        
+        <div class="inputBox">
+            <label for="findId">ID</label>
+        <input id="findId" type="text"> <br> <br>
+        </div>
+        <!--<button id="find">FIND</button>-->
+        <div>
+            <button type="submit" name="submit" id = "find" style="float: left">FIND</button>
+        </div>
+        <br> <br> <br>
+        
+
+        <h3 style="color: whitesmoke;" id="findName" type="text"></h3>
+        <h3 style="color: whitesmoke;" id="findAge" type="text"></h3>
+        <h3 style="color: whitesmoke;" id="finddob" type="text"></h3>
+        <h3 style="color: whitesmoke;" id="findCity" type="text"></h3>
+         <br> <br>
+
+    </div>
+</main>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyABmXuys5mfhiWnso5Dn-nKkW3pIqi9tZM",
+          authDomain: "testprojec-5a20f.firebaseapp.com",
+          databaseURL: "https://testprojec-5a20f-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "testprojec-5a20f",
+          storageBucket: "testprojec-5a20f.appspot.com",
+          messagingSenderId: "1053244765239",
+          appId: "1:1053244765239:web:6651dd9e0f532d6d873bb2"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        import {getDatabase, set,get,update,remove,ref,child}
+        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"
+        const db = getDatabase();
+
+       
+        var findId = document.querySelector("#findId");
+        var findName = document.querySelector("#findName");
+        var findAge = document.querySelector("#findAge");
+        var finddob = document.querySelector("#finddob");
+        var findCity = document.querySelector("#findCity");
+        
+        
+        var findBtn = document.querySelector("#find");
+        
+        
+
+        function FindData(){
+            const dbref = ref(db);
+
+            get(child(dbref, "People/" + findId.value))
+            .then((snapshot)=>{
+                if(snapshot.exists()){
+                    findName.innerHTML = "Name: " + snapshot.val().Name;
+                    findAge.innerHTML = "Age: " + snapshot.val().Age;
+                    finddob.innerHTML = "DOB: " + snapshot.val().DOB;
+                    findCity.innerHTML = "City: "+ snapshot.val().City;
+                }else{
+                    alert("No data found");
+                }
+            })
+            .catch((error)=>{
+                alert(error)
+            })
+        }
+        
+        findBtn.addEventListener('click',FindData);
+      </script>
+
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@1.34.1/tsparticles.min.js"
+integrity="sha256-D6LXCdCl4meErhc25yXnxIFUtwR96gPo+GtLYv89VZo=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="js/particles.js"></script>
+</body>
+</html>
