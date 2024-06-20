@@ -69,6 +69,17 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
 
+        // Check authentication state
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (!user) {
+        // User is not signed in, redirect to login page
+        window.location.href = 'login.html';
+      } else {
+        // User is signed in, show the restricted content
+          window.location.href = 'admin.html';
+      }
+    });    
+                
         import {getDatabase, set,get,update,remove,ref,child}
         from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"
         const db = getDatabase();
